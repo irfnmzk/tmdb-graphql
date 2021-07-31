@@ -65,9 +65,18 @@ class MovieDataSource extends TMDBDataSource {
   }
 
   async movie({ id }) {
-    const data = await this.get(`/${id}&append_to_response=companies`);
-    console.log(data.production_companies);
+    const data = await this.get(`/${id}`);
     return this.format(data);
+  }
+
+  async alternativeTitles({ id }) {
+    const data = await this.get(`/${id}/alternative_titles`);
+    return this.format(data.titles);
+  }
+
+  async credits({ id }) {
+    const data = await this.get(`/${id}/credits`);
+    return this.format({ cast: data.cast, crew: data.crew });
   }
 }
 
