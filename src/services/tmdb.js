@@ -88,6 +88,16 @@ class MovieDataSource extends TMDBDataSource {
     const data = await this.get(`/${id}/images`);
     return this.format(data);
   }
+
+  async keywords({ id }) {
+    const data = await this.get(`/${id}/keywords`);
+    return this.format(data.keywords);
+  }
+
+  async recommendations({ id, page }) {
+    const data = await this.get(`/${id}/recommendations?page=${page}`);
+    return this.format(data);
+  }
 }
 
 module.exports = {

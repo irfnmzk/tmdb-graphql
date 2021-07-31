@@ -55,13 +55,18 @@ const typeDefs = gql`
     posters: [Image!]!
   }
 
+  type MovieKeyword {
+    id: String
+    name: String
+  }
+
   type Movie {
     id: ID!
 
     # base response
     adult: Boolean!
     backdropPath: String
-    budget: Int!
+    budget: Int
     genres: [Genre!]!
     homepage: String
     imdbId: String
@@ -74,7 +79,7 @@ const typeDefs = gql`
     productionCountries: [Country!]!
     releaseDate: String!
     spokenLanguages: [Language!]!
-    status: String!
+    status: String
     tagline: String
     title: String!
     voteAverage: Float!
@@ -85,6 +90,17 @@ const typeDefs = gql`
     credits: MovieCredits
     externalIds: MovieExternalId
     images: MovieImages
+    keywords: [MovieKeyword!]!
+
+    # query
+    recommendations(page: Int = 1): MovieResults
+  }
+
+  type MovieResults {
+    page: Int!
+    results: [Movie!]!
+    totalPages: Int
+    totalResults: Int
   }
 
   type Query {
@@ -110,6 +126,12 @@ const resolvers = {
     },
     images: async ({ id }, _, { dataSources }) => {
       return dataSources.movie.images({ id });
+    },
+    keywords: async ({ id }, _, { dataSources }) => {
+      return dataSources.movie.keywords({ id });
+    },
+    recommendations: async ({ id }, { page }, { dataSources }) => {
+      return dataSources.movie.recommendations({ id, page });
     },
   },
 };
