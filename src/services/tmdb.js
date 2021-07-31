@@ -78,6 +78,16 @@ class MovieDataSource extends TMDBDataSource {
     const data = await this.get(`/${id}/credits`);
     return this.format({ cast: data.cast, crew: data.crew });
   }
+
+  async externalIds({ id }) {
+    const data = await this.get(`/${id}/external_ids`);
+    return this.format(data);
+  }
+
+  async images({ id }) {
+    const data = await this.get(`/${id}/images`);
+    return this.format(data);
+  }
 }
 
 module.exports = {

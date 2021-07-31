@@ -21,6 +21,15 @@ const typeDefs = gql`
     iso6391: String!
     name: String!
   }
+
+  type Image {
+    aspectRatio: Float!
+    filePath: String!
+    height: Int!
+    iso6391: String
+    voteAverage: Float
+    width: Int
+  }
 `;
 
 const resolvers = {};

@@ -43,6 +43,18 @@ const typeDefs = gql`
     type: String
   }
 
+  type MovieExternalId {
+    imdbId: String
+    facebookId: String
+    instagramId: String
+    twitterId: String
+  }
+
+  type MovieImages {
+    backdrops: [Image!]!
+    posters: [Image!]!
+  }
+
   type Movie {
     id: ID!
 
@@ -71,6 +83,8 @@ const typeDefs = gql`
     # relations
     alternativeTitles: [MovieAlternativeTitle!]!
     credits: MovieCredits
+    externalIds: MovieExternalId
+    images: MovieImages
   }
 
   type Query {
@@ -90,6 +104,12 @@ const resolvers = {
     },
     credits: async ({ id }, _, { dataSources }) => {
       return dataSources.movie.credits({ id });
+    },
+    externalIds: async ({ id }, _, { dataSources }) => {
+      return dataSources.movie.externalIds({ id });
+    },
+    images: async ({ id }, _, { dataSources }) => {
+      return dataSources.movie.images({ id });
     },
   },
 };
